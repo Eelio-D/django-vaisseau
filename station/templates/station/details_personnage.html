@@ -1,0 +1,37 @@
+{% extends 'station/base.html' %}
+
+{% block title %}Détails de {{ personnage.nom }}{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Détails du personnage : {{ personnage.nom }}</h1>
+<p><strong>État :</strong> {{ personnage.etat }}</p>
+<p><strong>Description :</strong> {{ personnage.description }}</p>
+<p><strong>Lieu actuel :</strong> 
+    <a href="{% url 'details_lieu' personnage.lieu.id %}">{{ personnage.lieu.nom }}</a>
+</p>
+
+{% if personnage.photo %}
+    <div>
+        <img src="{{ personnage.photo.url }}" alt="Photo de {{ personnage.nom }}" class="img-thumbnail" style="max-width: 300px;">
+    </div>
+{% endif %}
+
+<hr>
+
+<h3>Déplacer {{ personnage.nom }}</h3>
+{% if error_message %}
+    <div class="alert alert-danger" role="alert">
+        {{ error_message }}
+    </div>
+{% endif %}
+<form method="post" class="mt-4">
+    {% csrf_token %}
+    <div class="mb-3">
+        {{ form.lieu.label_tag }}
+        {{ form.lieu }}
+    </div>
+    <button type="submit" class="btn btn-primary">Déplacer</button>
+</form>
+
+<a href="{% url 'liste_personnages' %}" class="btn btn-secondary mt-3">Retour à la liste des personnages</a>
+{% endblock %}

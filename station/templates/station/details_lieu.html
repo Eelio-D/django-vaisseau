@@ -1,0 +1,33 @@
+{% extends 'station/base.html' %}
+
+{% block title %}Détails de {{ lieu.nom }}{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Détails du lieu : {{ lieu.nom }}</h1>
+
+{% if lieu.photo %}
+    <div>
+        <img src="{{ lieu.photo.url }}" alt="Photo de {{ lieu.nom }}" class="img-thumbnail mb-4" style="max-width: 400px;">
+    </div>
+{% else %}
+    <p>Aucune image disponible pour ce lieu.</p>
+{% endif %}
+
+<p><strong>Description :</strong> {{ lieu.description }}</p>
+<p><strong>Capacité :</strong> {{ lieu.habitants_actuels }}/{{ lieu.capacite_max }}</p>
+
+<h3>Habitants :</h3>
+<ul>
+    {% for habitant in lieu.habitants.all %}
+        <li>
+            <a href="{% url 'details_personnage' habitant.id %}">
+                {{ habitant.nom }}
+            </a> - {{ habitant.etat }}
+        </li>
+    {% empty %}
+        <li>Aucun habitant.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'vue_ensemble' %}" class="btn btn-secondary mt-3">Retour à l'accueil</a>
+{% endblock %}

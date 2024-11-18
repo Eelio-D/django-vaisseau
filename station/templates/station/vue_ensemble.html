@@ -1,0 +1,54 @@
+{% extends 'station/base.html' %}
+
+{% block title %}Vue d'ensemble{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Vue d'ensemble du vaisseau</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Capacité</th>
+            <th>Habitants</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for lieu in lieux %}
+        <tr>
+            <td>
+                {% if lieu.photo %}
+                    <img src="{{ lieu.photo.url }}" alt="Photo de {{ lieu.nom }}" style="max-width: 150px; height: auto;">
+                {% else %}
+                    <span>Aucune image</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'details_lieu' lieu.id %}">
+                    {{ lieu.nom }}
+                </a>
+            </td>
+            <td>{{ lieu.description }}</td>
+            <td>{{ lieu.habitants_actuels }}/{{ lieu.capacite_max }}</td>
+            <td>
+                {% if lieu.habitants.all %}
+                    <ul class="list-unstyled">
+                        {% for habitant in lieu.habitants.all %}
+                        <li>
+                            <a href="{% url 'details_personnage' habitant.id %}">
+                                {{ habitant.nom }}
+                            </a> - {{ habitant.etat }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    Aucun habitant
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

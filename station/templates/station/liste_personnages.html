@@ -1,0 +1,36 @@
+{% extends 'station/base.html' %}
+
+{% block title %}Liste des personnages{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Liste des personnages</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Photo</th>
+            <th>Nom</th>
+            <th>État</th>
+            <th>Lieu</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for personnage in personnages %}
+        <tr>
+            <td>
+                {% if personnage.photo %}
+                    <img src="{{ personnage.photo.url }}" alt="Photo de {{ personnage.nom }}" style="max-width: 100px; height: auto;">
+                {% else %}
+                    <span>Aucune photo</span>
+                {% endif %}
+            </td>
+            <td>{{ personnage.nom }}</td>
+            <td>{{ personnage.etat }}</td>
+            <td>{{ personnage.lieu.nom }}</td>
+            <td><a href="{% url 'details_personnage' personnage.id %}" class="btn btn-sm btn-primary">Voir</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

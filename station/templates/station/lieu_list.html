@@ -1,0 +1,23 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des lieux</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"> 
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}"> 
+</head>
+<body>
+    <h1>Liste des lieux</h1>
+    <ul>
+        {% for lieu in lieux %}
+            <li>
+                <h2><a href="{% url 'lieu_detail' pk=lieu.pk %}">{{ lieu.nom }}</a></h2> 
+                (Capacité : {{ lieu.habitants_actuels }} / {{ lieu.capacite_max }})
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
